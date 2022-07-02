@@ -1,0 +1,36 @@
+{% extends "school/layout.html" %}
+{% load static %}
+{% block body %}
+{% if user.is_authenticated %}
+    {% if active %}
+      {% if boolean %}
+<h2>Results</h2>
+<div class="row mx-auto">
+    {% for school in active %}
+    <div class="card mx-auto cardStyle">
+      {% if school.image_url %}
+        <img class="card-img-top imgStyle" src="{{ school.image_url }}" alt="Image">
+      {% else %}
+        <img class="card-img-top imgStyle" src="{% static 'nophoto.png' %}" alt="nophoto">
+      {% endif %}
+      <div class="card-body">
+      <h5 class="card-title">{{school.title}}</h5>
+      <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-transparent">{{school.short_description}}</li>
+          <li class="list-group-item bg-transparent"><b>LOCATION:</b>{{school.location}}</li>
+          <li class="list-group-item bg-transparent"><b>Acceptance rate:</b>{{school.accrate}}</li>
+      </ul>
+      <form method="GET" action="{% url 'singlecollege' school.id %}">
+        <input class="btn boton" type="submit" value="See more">
+      </form>
+      </div>
+    </div>
+{% endfor %}
+{% endif %}
+{% else %}
+  <h2>No colleges availables</h2>
+{% endif %}
+{% else %}
+<h1>Please, Login or Register</h1>
+{% endif %}
+{% endblock %}

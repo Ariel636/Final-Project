@@ -1,0 +1,10 @@
+{% extends "school/layout.html" %}
+{% load static %}
+{% block body %}
+{% if user.is_authenticated %}
+<div style="margin:17%;">
+<h1 class="secondText">Congratulations!</h2>
+<h2 class="secondText">You successfully subscribed for mailing list!</h2>
+</div>
+{% endif %}
+{% endblock %}

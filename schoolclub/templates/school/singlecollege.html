@@ -1,0 +1,119 @@
+{% extends "school/layout.html" %}
+{% load static %}
+{% block body %}
+
+<div class="d-flex justify-content-center">
+    <div class="card" style="max-width: 1000px;">
+        <div class="row no-gutters">
+            <div class="col-md-5">
+              {% if school.image_url %}
+                <img class="card-img-top h-100" src="{{ school.image_url }}" alt="Image">
+              {% else %}
+                <img class="card-img-top h-100" src="{% static 'nophoto.png' %}" alt="No photo available">
+              {% endif %}
+              </div> 
+              <div class="col-md-7">
+                  <div class="card-header">
+                      <div class="row">
+                        <div class="col-md-7">
+                      <b>{{school.title}}</b>
+                      </div>
+                      <div class="col">
+                        {% if favourite %}
+                        <form method="POST" action="{% url 'favswitcher' school.id %}">
+                          {% csrf_token %}
+                          <input class="btn boton ml-3" type="submit" value="Remove from College list">
+                        </form>
+                        {% else %}
+                        <form method="POST" action="{% url 'favswitcher' school.id %}">
+                          {% csrf_token %}
+                          <input class="btn boton ml-3" type="submit" value="Add to College list">
+                        </form>
+                        {% endif %}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <p class="card-text">{{school.description}}</p>
+                      <p><b>LOCATION: </b>{{school.location}}</p>
+                      <p><b>Acceptance rate: </b>{{school.accrate}}</p>
+                        <button class="btn boton" id="book"><b>Subscribe for mailing list</b></button>
+                </div>
+              </div>
+          </div>
+          <div id="map-view">
+          <div class="card-header d-flex justify-content-center">
+            <b>Check the location on the map</b>
+          </div>
+          <iframe src="{{school.map_url}}" width="100%" height="260px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
+</div>
+
+
+<div class="justify-content-center">
+
+<div id="comments-view">
+  <br><br>
+  <h2>Comments</h2>
+  <hr>
+  {% if comments %}
+  <ul>
+    {% for comment in comments %}
+   <li>{{comment.user}}: {{comment.comment}}</li> 
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form class="justify-content-center" method="POST" action="{% url 'comment' school.id %}">
+    {% csrf_token %}
+    <div class="form-group ml-4 mr-4">
+      <textarea class="form-control" name="comment" rows="3" placeholder="Comment here" required></textarea>
+    </div>
+    <input class="btn boton mb-3 ml-3" type="submit" value="Add your thoughts">
+  </form>
+</div> 
+</div>
+
+<div id="UNiversities-view">
+  <div class="row justify-content-center"> 
+    <div class="col-md-8 mt-2 mb-3">  
+      <div class="card"> 
+        <div class="card-header"><b>Subscribing form</b></div>
+        <div class="card-body"> 
+          <form method="POST" action="{% url 'UNiversities' %}" autocomplete="off">
+            {% csrf_token %}
+          <div class="form-group">
+            Subscribe for: <input class="form-control" style="background-color: rgb(170, 170, 170); cursor:none;" value="{{ school.title }}" name="college">
+          </div>
+          <div class="row">
+            <div class="col-md-6" autofocus>
+              Name {{ form.name }}
+            </div>
+            <div class="col-md-6">
+              Last name {{ form.last_name }}
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-5">
+                Date{{ form.date}}
+                <Small class="text-secondary">When do you plan to study at this college?</Small>
+            </div>
+            <div class="col-md-7">
+                Phone number {{ form.phone}} 
+                <Small class="text-secondary">We will regularly send you news</Small>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-2">
+            <input class="btn boton" type="submit" value="LETS GOO!">
+          </div>    
+       </form>
+      </div>
+      </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'school/Universities.js' %}"></script>
+{% endblock %}

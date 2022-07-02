@@ -1,0 +1,70 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+body {
+    background:url("background.jpg");
+    background-attachment: fixed;
+    font-family: Raleway, sans-serif;
+
+}
+
+.iconStyle, .navItem{
+    color:#c72525;
+    cursor: pointer;
+}
+.secondText {
+    color:#c72525;
+}
+
+.navItem:hover{
+    color: #212121;
+}
+
+.boton {
+    color: #fffafa;
+    border: 1px solid #21212100;
+    background-color: #44824a;
+    border-radius: none;
+    height: 35px;
+    outline: none;
+    text-align: center;
+
+}
+
+.boton:hover{
+    color: #e4e4e4;
+    background-color:#212121;
+    outline: none;
+    box-shadow:  3px 4px 0 rgba(104, 104, 104, 0.7);    
+}
+
+.cardStyle{
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 12px rgba(0,0,0,0.5);
+    text-align: center;
+    width: 18.5rem;
+    margin: 1rem;
+    margin-left: -1rem;
+    background-color: rgba(245, 245, 245, 0.2);
+}
+
+
+.imgStyle{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    max-height:100%;
+    overflow:hidden;
+}
+
+h1, h2 {
+    text-align: center;
+
+}
+
+.banner {
+    background-image: url("banner.png");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

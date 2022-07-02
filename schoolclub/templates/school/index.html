@@ -1,0 +1,80 @@
+{% extends "school/layout.html" %}
+{% load static %}
+{% block body %}
+<img src="https://i.ibb.co/KGcN2gM/imgonline-com-ua-Resize-Tj1y-XO0-STkxq.png" class="img-fluid" alt="Responsive image">
+<h2 class="m-2"><b>Do you want to increase your chances of getting into the Ivy League?</b></h2>
+<h2 style="color:red;">Become a part of them now!</h2>
+{% if user.is_authenticated %}
+    {% if active %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color:#700 !important;">
+          <a class="navbar-brand">FILTER BY</a>
+          <button class="navbar-toggler" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i class="fas fa-filter iconStyle"></i></span>
+        </button>
+          <div class="collapse navbar-collapse" id="filter">
+            <ul class="navbar-nav">
+              <li class="nav-item secondText mr-1 mt-1" style="color:#08ff00;"><b>LOCATION</b></li>
+              <li class="nav-item">
+              <form method="POST" action="{% url 'filterby' %}">
+                  {% csrf_token %}
+                <select class="form-control-sm" id="select-location" style="background-color:white; color:red;" name="location">
+                      <option value="all">All locations</option>
+                      <option value="New York, NY">New York, NY</option>
+                      <option value="Cambridge, MA">Cambridge, MA</option>
+                      <option value="Princeton, NJ">Princeton, NJ</option>
+                      <option value="New Haven, CT">New Haven, CT</option>
+                      <option value="Providence, RI">Providence, RI</option>
+                      <option value="Philadelphia, PA">Philadelphia, PA</option>
+                      <option value="Hanover, NH">Hanover, NH</option>
+                      <option value="Ithaca, NY">Ithaca, NY</option>
+                  </select>
+              </li>
+              <li class="nav-item secondText ml-1 mt-1" style="color:#08ff00;"><b>ACCEPTANCE RATE</b></li>
+              <li class="nav-item">
+                <select class="form-control-sm ml-1" style="background-color:white; color:red;"  name="accrate">
+                       <option value="any"><strong>ANY</strong></option>
+                       <option value="3.0-3.9%"><b>3.0-3.9%</b></option>
+                       <option value="4.0-4.9%"><b>4.0-4.9%</b></option>
+                       <option value="5.0-5.9%"><b>5.0-5.9%</b></option>
+                       <option value="6.0-6.9%"><b>6.0-6.9%</b></option>
+                       <option value="7.0-7.9%"><b>7.0-7.9%</b></option>
+                       <option value="8.0-8.9%"><b>8.0-8.9%</b></option>
+                       <option value="9.0-9.9%"><b>9.0-9.9%</b></option>
+                </select>
+              </li>
+              <li class="nav-item">
+                  <input class="btn boton pb-2 ml-1" type="submit" value="Filter">
+                </form>  
+              </li>
+            </ul>
+        
+          </div>
+        </nav>
+        <div class="row mx-auto">
+        {% for school in active %}
+        {%  if school.status %}
+        <div class="card mx-auto cardStyle">
+          {% if school.image_url %}
+            <img class="card-img-top imgStyle" src="{{ school.image_url }}" alt="Image">
+          {% else %}
+            <img class="card-img-top imgStyle" src="{% static 'nophoto.png' %}" alt="nophoto">
+          {% endif %}
+          <div class="card-body">
+          <h5 class="card-title">{{school.title}}</h5>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-transparent">{{school.short_description}}</li>
+              <li class="list-group-item bg-transparent"><b>LOCATION: </b>{{school.location}}</li>
+              <li class="list-group-item bg-transparent"><b>Acceptance rate: </b>{{school.accrate}}</li>
+          </ul>
+          <form method="GET" action="{% url 'singlecollege' school.id %}">
+          <input class="btn boton" type="submit" value="See more">
+          </form>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <h2>No colleges available</h2>
+    {% endif %}
+{% endif %}
+{% endblock %}
